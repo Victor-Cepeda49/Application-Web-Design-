@@ -17,7 +17,7 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
         .hero-image {
-            height: 250px;
+            height: 300px;
             object-fit: cover;
         }
     </style>

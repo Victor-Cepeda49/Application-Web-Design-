@@ -10,7 +10,7 @@
     <div class="card mb-3">
         <div class="row g-0">
             <div class="col-md-4">
-                <img src="{{ $superheroe->foto_url }}" class="img-fluid rounded-start" alt="{{ $superheroe->nombre_superheroe }}" style="height: 100%; object-fit: cover;">
+                <img src="{{ asset('storage/' . $superheroe->foto_url) }}" class="img-fluid rounded-start" alt="{{ $superheroe->nombre_superheroe }}" style="height: 100%; object-fit: cover;">
             </div>
             <div class="col-md-8">
                 <div class="card-body">
@@ -24,8 +24,8 @@
                     
                     <div class="mt-4">
                         <p class="text-muted">
-                        <small>Creado: {{ $superheroe->created_at ? $superheroe->created_at->format('d/m/Y H:i') : 'N/A' }}</small><br>
-                        <small>Última actualización: {{ $superheroe->updated_at ? $superheroe->updated_at->format('d/m/Y H:i') : 'N/A' }}</small>
+                            <small>Creado: {{ $superheroe->created_at ? $superheroe->created_at->format('d/m/Y H:i') : 'N/A' }}</small><br>
+                            <small>Última actualización: {{ $superheroe->updated_at ? $superheroe->updated_at->format('d/m/Y H:i') : 'N/A' }}</small>
                         </p>
                     </div>
                     
