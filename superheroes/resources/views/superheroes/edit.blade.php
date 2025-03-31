@@ -6,7 +6,7 @@
             <h2>Editar Superhéroe</h2>
         </div>
         <div class="card-body">
-            <form action="{{ route('superheroes.update', ['superheroe' => $superheroe->id]) }}" method="POST">
+            <form action="{{ route('superheroes.update', $superheroe->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
@@ -27,10 +27,13 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="foto_url" class="form-label">URL de la Foto</label>
-                    <input type="url" class="form-control @error('foto_url') is-invalid @enderror" id="foto_url" name="foto_url" value="{{ old('foto_url', $superheroe->foto_url) }}" required>
-                    <div class="form-text">Ingresa la URL de una imagen existente en Internet.</div>
-                    @error('foto_url')
+                    <label for="foto" class="form-label">Foto</label>
+                    <div class="mb-2">
+                        <img src="{{ asset('storage/' . $superheroe->foto_url) }}" alt="{{ $superheroe->nombre_superheroe }}" class="img-thumbnail" style="max-height: 200px;">
+                    </div>
+                    <input type="file" class="form-control @error('foto') is-invalid @enderror" id="foto" name="foto">
+                    <div class="form-text">Deja este campo vacío para mantener la foto actual.</div>
+                    @error('foto')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>

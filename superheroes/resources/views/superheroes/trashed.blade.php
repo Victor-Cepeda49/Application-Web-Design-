@@ -2,13 +2,10 @@
 
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>Lista de Superhéroes</h1>
+        <h1>Superhéroes Eliminados</h1>
         <div>
-            <a href="{{ route('superheroes.trashed') }}" class="btn btn-secondary me-2">
-                <i class="bi bi-trash"></i> Papelera
-            </a>
-            <a href="{{ route('superheroes.create') }}" class="btn btn-primary">
-                <i class="bi bi-plus-circle"></i> Nuevo Superhéroe
+            <a href="{{ route('superheroes.index') }}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Volver
             </a>
         </div>
     </div>
@@ -17,21 +14,27 @@
         <div class="row row-cols-1 row-cols-md-3 g-4">
             @foreach($superheroes as $superheroe)
                 <div class="col">
-                    <div class="card h-100 hero-card">
+                    <div class="card h-100 hero-card border-danger">
+                        <div class="card-header bg-danger text-white">
+                            Eliminado: {{ $superheroe->deleted_at ? $superheroe->deleted_at->format('d/m/Y H:i') : 'N/A' }}
+                        </div>
                         <img src="{{ asset('storage/' . $superheroe->foto_url) }}" class="card-img-top hero-image" alt="{{ $superheroe->nombre_superheroe }}">
                         <div class="card-body">
                             <h5 class="card-title">{{ $superheroe->nombre_superheroe }}</h5>
                             <p class="card-text text-muted">{{ $superheroe->nombre_real }}</p>
                             <p class="card-text">{{ Str::limit($superheroe->informacion_adicional, 100) }}</p>
                         </div>
-                        <div class="card-footer bg-transparent border-top-0">
+                        <div class="card-footer bg-transparent">
                             <div class="d-flex justify-content-between">
-                                <a href="{{ route('superheroes.show', $superheroe->id) }}" class="btn btn-info btn-sm">Ver</a>
-                                <a href="{{ route('superheroes.edit', $superheroe->id) }}" class="btn btn-warning btn-sm">Editar</a>
-                                <form action="{{ route('superheroes.destroy', $superheroe->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este superhéroe?')">
+                                <form action="{{ route('superheroes.restore', $superheroe->id) }}" method="POST">
+                                    @csrf
+                                    @method('PATCH')
+                                    <button type="submit" class="btn btn-success btn-sm">Restaurar</button>
+                                </form>
+                                <form action="{{ route('superheroes.forceDelete', $superheroe->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar permanentemente este superhéroe? Esta acción no se puede deshacer.')">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                    <button type="submit" class="btn btn-danger btn-sm">Eliminar permanentemente</button>
                                 </form>
                             </div>
                         </div>
@@ -41,7 +44,7 @@
         </div>
     @else
         <div class="alert alert-info">
-            No hay superhéroes registrados. ¡Comienza agregando uno nuevo!
+            No hay superhéroes en la papelera.
         </div>
     @endif
 @endsection

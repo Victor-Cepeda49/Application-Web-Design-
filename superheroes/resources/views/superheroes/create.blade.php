@@ -6,7 +6,7 @@
             <h2>Registrar Nuevo Superhéroe</h2>
         </div>
         <div class="card-body">
-            <form action="{{ route('superheroes.store') }}" method="POST">
+            <form action="{{ route('superheroes.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div class="mb-3">
@@ -26,10 +26,10 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="foto_url" class="form-label">URL de la Foto</label>
-                    <input type="url" class="form-control @error('foto_url') is-invalid @enderror" id="foto_url" name="foto_url" value="{{ old('foto_url') }}" required>
-                    <div class="form-text">Ingresa la URL de una imagen existente en Internet.</div>
-                    @error('foto_url')
+                    <label for="foto" class="form-label">Foto</label>
+                    <input type="file" class="form-control @error('foto') is-invalid @enderror" id="foto" name="foto" required>
+                    <div class="form-text">Selecciona una imagen para el superhéroe (JPG, PNG, GIF).</div>
+                    @error('foto')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
